@@ -10,6 +10,12 @@ from mediapipe import solutions
 from mediapipe.framework.formats import landmark_pb2
 import numpy as np
 
+num_poses = 4
+min_pose_detection_confidence = 0.5
+min_pose_presence_confidence = 0.5
+min_tracking_confidence = 0.5
+video_source = 0
+
 
 def draw_landmarks_on_image(rgb_image, detection_result):
     pose_landmarks_list = detection_result.pose_landmarks
@@ -40,7 +46,12 @@ def draw_landmarks_on_image(rgb_image, detection_result):
 
 base_options = python.BaseOptions(model_asset_path="pose_landmarker_heavy.task")
 options = vision.PoseLandmarkerOptions(
-    base_options=base_options, output_segmentation_masks=True
+    base_options=base_options,
+    output_segmentation_masks=False,
+    num_poses=num_poses,
+    min_pose_detection_confidence=min_pose_detection_confidence,
+    min_pose_presence_confidence=min_pose_presence_confidence,
+    min_tracking_confidence=min_tracking_confidence,
 )
 detector = vision.PoseLandmarker.create_from_options(options)
 
@@ -50,7 +61,7 @@ info = pylsl.StreamInfo("Pose", "Pose", 92, 0, "float32", "pose123")
 outlet = pylsl.StreamOutlet(info)
 
 # Open the webcam video stream
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(video_source)
 
 # Loop until the user presses 'q' to quit
 while True:
