@@ -75,7 +75,7 @@ class PoseDataStreamer:
 
         self.outlet = pylsl.StreamOutlet(info)
 
-    def stream_pose_data(self, result: PoseLandmarkerResult, timestamp_ms: int):
+    def stream_pose_data(self, result: PoseLandmarkerResult, timestamp: float):
         # Prettyprint result __dict__ with indents
         # print(result)
 
@@ -100,4 +100,4 @@ class PoseDataStreamer:
                 * (self.num_poses - num_detected_poses)
             )
         # Stream the pose data over Lab Streaming Layer
-        self.outlet.push_sample(pose_data, timestamp_ms)
+        self.outlet.push_sample(pose_data, timestamp)

@@ -97,7 +97,7 @@ detector = vision.PoseLandmarker.create_from_options(options)
 cap = cv2.VideoCapture(video_source)
 
 success, frame = cap.read()
-frame_timestamp_ms = int(cap.get(cv2.CAP_PROP_POS_MSEC))
+first_frame_timestamp_ms = int(cap.get(cv2.CAP_PROP_POS_MSEC))
 if success:
     # Convert the image to RGB format
     image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame)
@@ -117,7 +117,7 @@ print("Starting Streaming...")
 while True:
     # Read a frame from the webcam
     success, frame = cap.read()
-    frame_timestamp_ms = int(cap.get(cv2.CAP_PROP_POS_MSEC))
+    frame_timestamp_ms = first_frame_timestamp_ms - int(cap.get(cv2.CAP_PROP_POS_MSEC))
     if success:
         # Convert the image to RGB format
         image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame)
@@ -131,7 +131,7 @@ while True:
                 # Show the image in a window
                 annotated_image = draw_landmarks_on_image(image.numpy_view(), result)
                 cv2.imshow("Webcam Poses", annotated_image)
-                streamer.stream_pose_data(result, frame_timestamp_ms)
+                streamer.stream_pose_data(result, frame_timestamp_ms / 1000.0)
 
     else:
         print("Failed to read frame")
