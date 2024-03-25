@@ -11,11 +11,13 @@ class PoseDataStreamer:
         landmark_start_index=11,
         num_channels_per_landmark=88,
         model_path="pose_landmarker_heavy.task",
+        stream_name="Pose",
     ):
         self.landmark_start_index = landmark_start_index
         self.num_channels_per_landmark = num_channels_per_landmark
         self.model_path = model_path
         self.num_poses = num_poses
+        self.stream_name = stream_name
 
         self.body_parts = [
             "left_shoulder",
@@ -43,7 +45,7 @@ class PoseDataStreamer:
         ]
 
         info = pylsl.StreamInfo(
-            "Pose",
+            self.stream_name,
             "Pose",
             self.num_channels_per_landmark * self.num_poses,
             0,
