@@ -38,7 +38,7 @@ parser.add_argument(
     help="Minimum tracking confidence",
 )
 parser.add_argument("--video_source", type=int, default=0, help="Video source")
-parser.add_argument("--asynchronous", type=bool, default=True, help="Asynchronous mode")
+parser.add_argument("--synchronous", type=bool, default=False, help="Asynchronous mode")
 parser.add_argument(
     "--model_path", type=str, default="pose_landmarker_heavy.task", help="Model path"
 )
@@ -55,7 +55,7 @@ min_pose_detection_confidence = args.min_pose_detection_confidence
 min_pose_presence_confidence = args.min_pose_presence_confidence
 min_tracking_confidence = args.min_tracking_confidence
 video_source = args.video_source
-asynchronous = args.asynchronous
+asynchronous = not args.asynchronous
 model_path = args.model_path
 stream_name = args.stream_name
 
