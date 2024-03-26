@@ -46,7 +46,7 @@ class PoseDataStreamer:
 
         info = pylsl.StreamInfo(
             self.stream_name,
-            "Pose",
+            "MoCap",
             self.num_channels_per_landmark * self.num_poses,
             0,
             "float32",
